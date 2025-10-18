@@ -1,0 +1,160 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 1,
+  "task": {
+    "user_id": "11",
+    "instruction": "You are Gina Banks, an HR Manager with the email gina.banks@outlook.com. You want to close the job opening for the position 'Talent Acquisition Specialist' in the HR department.",
+    "actions": [
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "gina.banks@outlook.com"
+          }
+        }
+      },
+      {
+        "name": "check_approval",
+        "arguments": {
+          "action": "update_job_position",
+          "requester_email": "gina.banks@outlook.com"
+        }
+      },
+      {
+        "name": "discover_department_entities",
+        "arguments": {
+          "entity_type": "departments",
+          "filters": {
+            "department_name": "HR"
+          }
+        }
+      },
+      {
+        "name": "discover_job_entities",
+        "arguments": {
+          "entity_type": "job_positions",
+          "filters": {
+            "title": "Talent Acquisition Specialist",
+            "department_id": "78"
+          }
+        }
+      },
+      {
+        "name": "manage_job_position",
+        "arguments": {
+          "action": "update",
+          "department_id": "78",
+          "position_id": "350",
+          "status": "closed"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_id": "350",
+          "reference_type": "job_positions",
+          "user_id": "11"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "email",
+          "input": "filters.email"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "check_approval",
+        "connection": {
+          "output": "results[0].email",
+          "input": "requester_email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "check_approval",
+        "connection": {
+          "output": "action",
+          "input": "action"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_department_entities",
+        "connection": {
+          "output": "department_name",
+          "input": "filters.department_name"
+        }
+      },
+      {
+        "from": "discover_department_entities",
+        "to": "discover_job_entities",
+        "connection": {
+          "output": "results[0].department_id",
+          "input": "filters.department_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_job_entities",
+        "connection": {
+          "output": "title",
+          "input": "filters.title"
+        }
+      },
+      {
+        "from": "discover_job_entities",
+        "to": "manage_job_position",
+        "connection": {
+          "output": "results[0].position_id, results[0].department_id",
+          "input": "position_id, department_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_job_position",
+        "connection": {
+          "output": "action, status",
+          "input": "action, status"
+        }
+      },
+      {
+        "from": "manage_job_position",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "position_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "action, operation, reference_type",
+          "input": "action, operation, reference_type"
+        }
+      }
+    ],
+    "outputs": ["350"],
+    "num_edges": 11
+  }
+}

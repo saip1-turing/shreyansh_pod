@@ -1,0 +1,140 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 1,
+  "task": {
+    "user_id": "1",
+    "instruction": "You are Johnny Jones (email: johnny.jones@protonmail.com), an HR Director. You need to onboard a new employee named Emily Clark (email: emily.clark@company.com) into the Marketing department, enroll her in the 'Code of Conduct Training', and record this onboarding event for audit purposes.",
+    "actions": [
+      {
+        "name": "manage_employee",
+        "arguments": {
+          "action": "create",
+          "employment_status": "active",
+          "hire_date": "2025-09-09",
+          "position_id": "23",
+          "user_id": "46"
+        },
+        "output": {
+          "employee_data": {
+            "employee_id": "101",
+            "employment_status": "active",
+            "hire_date": "2025-09-09",
+            "position_id": "23",
+            "user_id": "46"
+          },
+          "employee_id": "101",
+          "message": "Employee record created successfully for user ID '46'",
+          "success": true
+        }
+      },
+      {
+        "name": "manage_employee_training",
+        "arguments": {
+          "operation": "create",
+          "employee_id": "101",
+          "program_id": "6",
+          "enrollment_date": "2024-09-09",
+          "completion_date": "2025-09-09",
+          "certificate_issued": true
+        },
+        "output": {
+          "training_record_id": "343",
+          "employee_id": "101",
+          "program_id": "6",
+          "status": "enrolled",
+          "success": true
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_id": "101",
+          "reference_type": "employee_onboarding",
+          "user_id": "46"
+        },
+        "output": {
+          "log_id": "2885",
+          "reference_id": "101",
+          "reference_type": "employee_onboarding",
+          "user_id": "46",
+          "timestamp": "2025-10-01T12:00:00",
+          "success": true
+        }
+      }
+    ],
+    "outputs": ["101", "343", "2885"],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "manage_employee",
+        "connection": {
+          "output": "action, employment_status, hire_date, position_id, user_id",
+          "input": "action, employment_status, hire_date, position_id, user_id"
+        }
+      },
+      {
+        "from": "manage_employee",
+        "to": "manage_employee_training",
+        "connection": {
+          "output": "employee_id",
+          "input": "employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_employee_training",
+        "connection": {
+          "output": "operation, program_id, enrollment_date, completion_date, certificate_issued",
+          "input": "operation, program_id, enrollment_date, completion_date, certificate_issued"
+        }
+      },
+      {
+        "from": "manage_employee",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "employee_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "action, operation, reference_type, user_id",
+          "input": "action, operation, reference_type, user_id"
+        }
+      },
+      {
+        "from": "manage_employee_training",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "training_record_id",
+          "input": "training_reference_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_employee_training",
+        "connection": {
+          "output": "user_id",
+          "input": "approver_id"
+        }
+      },
+      {
+        "from": "manage_employee",
+        "to": "manage_employee_training",
+        "connection": {
+          "output": "employee_data.position_id",
+          "input": "position_context"
+        }
+      }
+    ],
+    "num_edges": 8
+  }
+}

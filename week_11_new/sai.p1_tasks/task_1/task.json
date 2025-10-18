@@ -1,0 +1,284 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 1,
+  "task": {
+    "user_id": "6",
+    "instruction": "You are Tina Hale (tina86@yahoo.com), an HR Manager. You have approval to onboard a new employee named Jon Eric for the open Design Director intern position (position ID 69) with a hire date of 2025-10-28. You need to create Jon’s user account, create his employee record for the given position.",
+    "actions": [
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "tina86@yahoo.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2024-08-21T15:10:45",
+              "email": "tina86@yahoo.com",
+              "first_name": "Tina",
+              "last_name": "Hale",
+              "mfa_enabled": true,
+              "phone_number": "+19386024033",
+              "role": "hr_manager",
+              "status": "active",
+              "updated_at": "2024-10-19T22:44:53",
+              "user_id": "6"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "check_approval",
+        "arguments": {
+          "action": "employee_onboarding",
+          "requester_email": "tina86@yahoo.com"
+        },
+        "output": {
+          "approval_valid": true,
+          "approved_by": [
+            "compliance_officer",
+            "hr_manager"
+          ],
+          "message": "All required approvals received from: hr_manager, compliance_officer"
+        }
+      },
+      {
+        "name": "discover_job_entities",
+        "arguments": {
+          "entity_type": "job_positions",
+          "filters": {
+            "position_id": "69"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "job_positions",
+          "results": [
+            {
+              "created_at": "2023-06-10T03:32:12",
+              "department_id": "14",
+              "employment_type": "intern",
+              "hourly_rate_max": 180.0,
+              "hourly_rate_min": 120.0,
+              "job_level": "director",
+              "position_id": "69",
+              "status": "open",
+              "title": "Design Director",
+              "updated_at": "2024-04-17T13:15:07"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "manage_user",
+        "arguments": {
+          "action": "create",
+          "email": "jon.eric@company.com",
+          "first_name": "jon",
+          "last_name": "eric",
+          "role": "employee"
+        },
+        "output": {
+          "message": "User created successfully with ID 147",
+          "success": true,
+          "user_data": {
+            "created_at": "2025-10-01T12:00:00",
+            "email": "jon.eric@company.com",
+            "first_name": "jon",
+            "last_name": "eric",
+            "mfa_enabled": false,
+            "role": "employee",
+            "status": "active",
+            "updated_at": "2025-10-01T12:00:00",
+            "user_id": "147"
+          },
+          "user_id": "147"
+        }
+      },
+      {
+        "name": "manage_employee",
+        "arguments": {
+          "action": "create",
+          "hire_date": "2025-09-09",
+          "position_id": "69",
+          "user_id": "147"
+        },
+        "output": {
+          "employee_data": {
+            "address": null,
+            "created_at": "2025-10-01T12:00:00",
+            "date_of_birth": null,
+            "employee_id": "101",
+            "employment_status": "active",
+            "hire_date": "2025-09-09",
+            "hourly_rate": null,
+            "manager_id": null,
+            "position_id": "69",
+            "updated_at": "2025-10-01T12:00:00",
+            "user_id": "147"
+          },
+          "employee_id": "101",
+          "message": "Employee record created successfully for user ID '147'",
+          "success": true
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_id": "AUTOGEN",
+          "reference_type": "employees",
+          "user_id": "147"
+        },
+        "output": {
+          "action": "create",
+          "field_name": null,
+          "log_id": "2885",
+          "new_value": null,
+          "old_value": null,
+          "reference_id": "AUTOGEN",
+          "reference_type": "employees",
+          "timestamp": "2025-10-01T12:00:00",
+          "user_id": "147"
+        }
+      },{
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_id": "AUTOGEN",
+          "reference_type": "employees",
+          "user_id": "147"
+        },
+        "output": {
+          "action": "create",
+          "field_name": null,
+          "log_id": "2885",
+          "new_value": null,
+          "old_value": null,
+          "reference_id": "147",
+          "reference_type": "employees",
+          "timestamp": "2025-10-01T12:00:00",
+          "user_id": "147"
+        }
+      },{
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_id": "147",
+          "reference_type": "users",
+          "user_id": "147"
+        },
+        "output": {
+          "action": "create",
+          "field_name": null,
+          "log_id": "2885",
+          "new_value": null,
+          "old_value": null,
+          "reference_id": "147",
+          "reference_type": "employees",
+          "timestamp": "2025-10-01T12:00:00",
+          "user_id": "147"
+        }
+      }
+
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "check_approval",
+        "connection": {
+          "output": "results[0].email",
+          "input": "requester_email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "check_approval",
+        "connection": {
+          "output": "action",
+          "input": "action"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_job_entities",
+        "connection": {
+          "output": "entity_type, position_id",
+          "input": "entity_type, filters.position_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_user",
+        "connection": {
+          "output": "action, email, first_name, last_name, role",
+          "input": "action, email, first_name, last_name, role"
+        }
+      },
+      {
+        "from": "discover_job_entities",
+        "to": "manage_employee",
+        "connection": {
+          "output": "results[0].position_id",
+          "input": "position_id"
+        }
+      },
+      {
+        "from": "manage_user",
+        "to": "manage_employee",
+        "connection": {
+          "output": "user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_employee",
+        "connection": {
+          "output": "action, hire_date",
+          "input": "action, hire_date"
+        }
+      },
+      {
+        "from": "manage_user",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "action, operation, reference_id, reference_type",
+          "input": "action, operation, reference_id, reference_type"
+        }
+      }
+    ],
+    "outputs": ["101"],
+    "num_edges": 10
+  }
+}
