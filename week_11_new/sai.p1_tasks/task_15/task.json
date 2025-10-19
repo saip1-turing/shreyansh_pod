@@ -1,0 +1,515 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 1,
+  "task": {
+    "user_id": "6",
+    "instruction": "You are Tina Hale (HR Manager, tina86@yahoo.com). Complete the comprehensive offboarding for Derek Contreras ( email dcontreras@yahoo.com), with compliance verified by Sarah Lang (sarahlang@company.com). The desired end state is that Derek's employment status is “terminated” and his account status is “inactive.”",
+    "actions": [
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "tina86@yahoo.com",
+            "role": "hr_manager"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2024-08-21T15:10:45",
+              "email": "tina86@yahoo.com",
+              "first_name": "Tina",
+              "last_name": "Hale",
+              "mfa_enabled": true,
+              "phone_number": "+19386024033",
+              "role": "hr_manager",
+              "status": "active",
+              "updated_at": "2024-10-19T22:44:53",
+              "user_id": "6"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "sarahlang@company.com",
+            "role": "compliance_officer"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2020-02-23T11:15:36",
+              "email": "sarahlang@company.com",
+              "first_name": "Sarah",
+              "last_name": "Lang",
+              "mfa_enabled": false,
+              "phone_number": "+19292582049",
+              "role": "compliance_officer",
+              "status": "active",
+              "updated_at": "2022-11-13T02:29:53",
+              "user_id": "44"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "dcontreras@yahoo.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2020-09-26T07:50:03",
+              "email": "dcontreras@yahoo.com",
+              "first_name": "Derek",
+              "last_name": "Contreras",
+              "mfa_enabled": false,
+              "phone_number": "+13346512812",
+              "role": "employee",
+              "status": "active",
+              "updated_at": "2025-06-09T18:13:53",
+              "user_id": "52"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "check_approval",
+        "arguments": {
+          "action": "employee_offboarding",
+          "requester_email": "tina86@yahoo.com"
+        },
+        "output": {
+          "approval_valid": true,
+          "approved_by": [
+            "compliance_officer",
+            "hr_manager"
+          ],
+          "message": "All required approvals received from: compliance_officer, hr_manager"
+        }
+      },
+      {
+        "name": "discover_payroll_entities",
+        "arguments": {
+          "entity_type": "payroll_records",
+          "filters": {
+            "employee_id": "6"
+          }
+        },
+        "output": {
+          "count": 8,
+          "entity_type": "payroll_records",
+          "results": [
+            {
+              "approved_by": "36",
+              "created_at": "2022-04-05T11:11:29",
+              "employee_id": "6",
+              "hourly_rate": 169.0,
+              "hours_worked": 8.87,
+              "pay_period_end": "2022-03-31",
+              "pay_period_start": "2022-03-01",
+              "payment_date": null,
+              "payroll_id": "20",
+              "status": "draft",
+              "updated_at": "2022-04-13T05:53:13"
+            },
+            {
+              "approved_by": "34",
+              "created_at": "2023-01-01T01:17:45",
+              "employee_id": "6",
+              "hourly_rate": 169.0,
+              "hours_worked": 7.61,
+              "pay_period_end": "2022-12-31",
+              "pay_period_start": "2022-12-01",
+              "payment_date": "2023-01-13",
+              "payroll_id": "21",
+              "status": "paid",
+              "updated_at": "2024-06-10T16:39:03"
+            },
+            {
+              "approved_by": "34",
+              "created_at": "2023-03-01T03:36:01",
+              "employee_id": "6",
+              "hourly_rate": 169.0,
+              "hours_worked": 26.14,
+              "pay_period_end": "2023-02-28",
+              "pay_period_start": "2023-02-01",
+              "payment_date": "2023-03-13",
+              "payroll_id": "22",
+              "status": "paid",
+              "updated_at": "2025-03-13T20:13:06"
+            },
+            {
+              "approved_by": "37",
+              "created_at": "2023-12-04T17:08:21",
+              "employee_id": "6",
+              "hourly_rate": 169.0,
+              "hours_worked": 8.9,
+              "pay_period_end": "2023-11-30",
+              "pay_period_start": "2023-11-01",
+              "payment_date": "2023-12-14",
+              "payroll_id": "23",
+              "status": "paid",
+              "updated_at": "2024-05-05T22:38:10"
+            },
+            {
+              "approved_by": "35",
+              "created_at": "2024-10-01T16:15:09",
+              "employee_id": "6",
+              "hourly_rate": 169.0,
+              "hours_worked": 9.35,
+              "pay_period_end": "2024-09-30",
+              "pay_period_start": "2024-09-01",
+              "payment_date": null,
+              "payroll_id": "24",
+              "status": "cancelled",
+              "updated_at": "2024-12-22T11:56:26"
+            },
+            {
+              "approved_by": "35",
+              "created_at": "2024-12-01T14:27:45",
+              "employee_id": "6",
+              "hourly_rate": 169.0,
+              "hours_worked": 9.92,
+              "pay_period_end": "2024-11-30",
+              "pay_period_start": "2024-11-01",
+              "payment_date": null,
+              "payroll_id": "25",
+              "status": "approved",
+              "updated_at": "2025-05-01T04:48:33"
+            },
+            {
+              "approved_by": "33",
+              "created_at": "2025-04-01T16:01:06",
+              "employee_id": "6",
+              "hourly_rate": 169.0,
+              "hours_worked": 7.48,
+              "pay_period_end": "2025-03-31",
+              "pay_period_start": "2025-03-01",
+              "payment_date": "2025-04-12",
+              "payroll_id": "26",
+              "status": "paid",
+              "updated_at": "2025-08-19T10:19:10"
+            },
+            {
+              "approved_by": "35",
+              "created_at": "2025-06-03T20:06:27",
+              "employee_id": "6",
+              "hourly_rate": 169.0,
+              "hours_worked": 9.97,
+              "pay_period_end": "2025-05-31",
+              "pay_period_start": "2025-05-01",
+              "payment_date": "2025-06-10",
+              "payroll_id": "27",
+              "status": "paid",
+              "updated_at": "2025-07-31T15:33:24"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "discover_benefits_entities",
+        "arguments": {
+          "entity_type": "employee_benefits",
+          "filters": {
+            "employee_id": "6"
+          }
+        },
+        "output": {
+          "count": 4,
+          "entity_type": "employee_benefits",
+          "results": [
+            {
+              "beneficiary_name": "Debra David",
+              "beneficiary_relationship": "spouse",
+              "coverage_level": "employee_only",
+              "created_at": "2025-08-03T06:52:35",
+              "employee_id": "6",
+              "enrollment_date": "2024-12-03",
+              "enrollment_id": "10",
+              "plan_id": "22",
+              "status": "active",
+              "updated_at": "2025-08-05T14:37:06"
+            },
+            {
+              "beneficiary_name": "Leslie Donovan",
+              "beneficiary_relationship": "spouse",
+              "coverage_level": "family",
+              "created_at": "2025-06-09T12:32:36",
+              "employee_id": "6",
+              "enrollment_date": "2024-12-01",
+              "enrollment_id": "11",
+              "plan_id": "5",
+              "status": "active",
+              "updated_at": "2025-06-14T15:15:07"
+            },
+            {
+              "beneficiary_name": "Derek Contreras",
+              "beneficiary_relationship": "self",
+              "coverage_level": "employee_only",
+              "created_at": "2025-06-17T22:14:49",
+              "employee_id": "6",
+              "enrollment_date": "2025-04-20",
+              "enrollment_id": "12",
+              "plan_id": "14",
+              "status": "active",
+              "updated_at": "2025-07-06T22:04:50"
+            },
+            {
+              "beneficiary_name": "Rachel Lewis",
+              "beneficiary_relationship": "spouse",
+              "coverage_level": "employee_spouse",
+              "created_at": "2025-02-05T00:07:14",
+              "employee_id": "6",
+              "enrollment_date": "2024-10-06",
+              "enrollment_id": "13",
+              "plan_id": "18",
+              "status": "active",
+              "updated_at": "2025-03-30T16:07:45"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "discover_training_entities",
+        "arguments": {
+          "entity_type": "employee_training",
+          "filters": {
+            "employee_id": "6"
+          }
+        },
+        "output": {
+          "count": 2,
+          "entity_type": "employee_training",
+          "results": [
+            {
+              "certificate_issued": false,
+              "completion_date": null,
+              "created_at": "2024-04-24T18:31:26",
+              "employee_id": "6",
+              "enrollment_date": "2024-04-24",
+              "expiry_date": null,
+              "program_id": "6",
+              "score": null,
+              "status": "in_progress",
+              "training_record_id": "10",
+              "updated_at": "2024-11-06T22:12:30"
+            },
+            {
+              "certificate_issued": false,
+              "completion_date": null,
+              "created_at": "2022-04-03T09:49:23",
+              "employee_id": "6",
+              "enrollment_date": "2022-04-03",
+              "expiry_date": null,
+              "program_id": "4",
+              "score": null,
+              "status": "in_progress",
+              "training_record_id": "11",
+              "updated_at": "2025-04-24T08:34:07"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "manage_employee",
+        "arguments": {
+          "action": "update",
+          "employee_id": "6",
+          "employment_status": "terminated"
+        },
+        "output": {
+          "employee_data": {
+            "address": "97200 Katherine Plain, Thomasmouth, VI 09815",
+            "created_at": "2023-03-22T12:46:41",
+            "date_of_birth": "1987-10-13",
+            "employee_id": "6",
+            "employment_status": "terminated",
+            "hire_date": "2022-01-16",
+            "hourly_rate": 169,
+            "manager_id": null,
+            "position_id": "368",
+            "updated_at": "2025-10-01T12:00:00",
+            "user_id": "52"
+          },
+          "employee_id": "6",
+          "message": "Employee with ID '6' updated successfully",
+          "success": true
+        }
+      },
+      {
+        "name": "manage_user",
+        "arguments": {
+          "action": "update",
+          "status": "inactive",
+          "user_id": "52"
+        },
+        "output": {
+          "message": "User 52 updated successfully",
+          "success": true,
+          "updated_fields": [
+            "status"
+          ],
+          "user_data": {
+            "created_at": "2020-09-26T07:50:03",
+            "email": "dcontreras@yahoo.com",
+            "first_name": "Derek",
+            "last_name": "Contreras",
+            "mfa_enabled": false,
+            "phone_number": "+13346512812",
+            "role": "employee",
+            "status": "inactive",
+            "updated_at": "2025-10-01T12:00:00",
+            "user_id": "52"
+          }
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_id": "6",
+          "reference_type": "employees",
+          "user_id": "52"
+        },
+        "output": {
+          "action": "create",
+          "field_name": null,
+          "log_id": "2885",
+          "new_value": null,
+          "old_value": null,
+          "reference_id": "6",
+          "reference_type": "employees",
+          "timestamp": "2025-10-01T12:00:00",
+          "user_id": "52"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email, role",
+          "input": "entity_type, filters.email, filters.role"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email, role",
+          "input": "entity_type, filters.email, filters.role"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "check_approval",
+        "connection": {
+          "output": "requester_email, action",
+          "input": "requester_email, action"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_payroll_entities",
+        "connection": {
+          "output": "entity_type, employee_id",
+          "input": "entity_type, filters.employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_benefits_entities",
+        "connection": {
+          "output": "entity_type, employee_id",
+          "input": "entity_type, filters.employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_training_entities",
+        "connection": {
+          "output": "entity_type, employee_id",
+          "input": "entity_type, filters.employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_employee",
+        "connection": {
+          "output": "action, employee_id, employment_status",
+          "input": "action, employee_id, employment_status"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_user",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_user",
+        "connection": {
+          "output": "action, status",
+          "input": "action, status"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "operation, action, reference_type, reference_id",
+          "input": "operation, action, reference_type, reference_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "user_id"
+        }
+      }
+    ],
+    "output": [],
+    "num_edges": 12
+  }
+}
